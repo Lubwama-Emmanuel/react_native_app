@@ -1,9 +1,30 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import Search from "../assets/SVG/search.svg";
 import Dots from "../assets/SVG/dots-three-vertical.svg";
 import Groups from "../assets/SVG/groups.svg";
+import { useState } from "react";
 
-export default function Header() {
+const titles = [
+  {
+    id: 0,
+    item: "chats",
+  },
+  {
+    id: 1,
+    item: "calls",
+  },
+  {
+    id: 2,
+    item: "status",
+  },
+];
+
+export default function Header({ activeTitle, setActiveTitle }) {
+  
+  function handleChangetitle(newTitle) {
+    setActiveTitle((current) => newTitle);
+  }
+
   return (
     <View style={styles.header}>
       <View style={styles.logo}>
@@ -16,17 +37,30 @@ export default function Header() {
       <View style={styles.sections}>
         <Groups fill="#f1f1f1" />
         <View style={styles.titles}>
-          <View>
-            <Text style={styles.title}>Chats</Text>
-          </View>
-          <View>
-            <Text style={styles.title}>calls</Text>
-          </View>
-          <View>
-            <Text style={styles.title}>status</Text>
-          </View>
+          {titles.map((el) => (
+            <TitleCon
+              el={el}
+              active={el.id === activeTitle}
+              onTouch={handleChangetitle}
+              key={el.id}
+            />
+          ))}
         </View>
       </View>
+    </View>
+  );
+}
+
+function TitleCon({ el, active, onTouch }) {
+  return (
+    <View
+      style={
+        active ? [styles.titleCon, styles.titleConActive] : styles.titleCon
+      }
+    >
+      <Pressable onPress={() => onTouch(el.id)}>
+        <Text style={styles.title}>{el.item}</Text>
+      </Pressable>
     </View>
   );
 }
@@ -40,7 +74,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
 
     flexDirection: "column",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
   },
   logo: {
     flexDirection: "row",
@@ -64,6 +98,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     justifyContent: "space-between",
+  },
+  titleCon: {
+    width: "30%",
+    alignItems: "center",
+  },
+  titleConActive: {
+    borderBottomWidth: 3,
+    borderColor: "#f1f1f1",
   },
   title: {
     color: "#f1f1f1",

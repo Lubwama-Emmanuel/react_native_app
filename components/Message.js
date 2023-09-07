@@ -4,7 +4,7 @@ import SvgMsg from "../assets/SVG/message.svg";
 export default function Message() {
   return (
     <View style={styles.sendMsg}>
-      <SvgMsg width="30" height="30" />
+      <SvgMsg width="30" height="30" fill="#f1f1f1" />
     </View>
   );
 }
