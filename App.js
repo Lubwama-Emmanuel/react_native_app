@@ -27,6 +27,9 @@ export default function App() {
             <Chat />
             <Chat />
             <Chat />
+            <Chat />
+            <Chat />
+
             <Footer />
           </ScrollView>
         )}
